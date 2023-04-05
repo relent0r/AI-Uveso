@@ -38,13 +38,15 @@ BuilderManager = Class(TheOldBuilderManager) {
 
     -- Hook for Uveso AI debug
     GetHighestBuilder = function(self,bType,factory)
+        if not self.Brain.Uveso then
+            return TheOldBuilderManager.GetHighestBuilder(self,bType,factory)
+        end
         if not self.BuilderData[bType] then
             error('*BUILDERMANAGER ERROR: Invalid builder type - ' .. repr(bType))
         end
         if not self.Brain.BuilderManagers[self.LocationType] then
             return false
         end
-        self.NumGet = self.NumGet + 1
         local found = false
         local possibleBuilders = {}
         -- Print the whole builder table into the game.log. 
